@@ -17,6 +17,7 @@ Ce projet est "livré" avec un exemple de journée type pour un mariage. Pas bes
 Pour l'adapter à vos besoins :
 * modifiez le fichier `data/events.js` pour configurer les events, les lignes, les icones, etc
 * ajouter vos icones dans le dossier `images/icons`
+* ajouter vos images de personnes dans le dossier `images/users`
 
 ### Structure du projet
 
@@ -28,5 +29,5 @@ Pour l'adapter à vos besoins :
     * script.js : orchestrateur pour utiliser tous les autres éléments
     * style.css : toutes les règles CSS
 * images/icons/ : toutes les images pour les icônes
-* images/people/ : toutes les images pour les personnes
+* images/users/ : toutes les images pour les personnes
 * data/events.js : toutes les informations qui seront affichées dans l'application

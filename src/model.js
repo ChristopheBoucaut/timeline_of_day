@@ -132,14 +132,16 @@ const TimelineOfDayModels = (() => {
          * @param {Place|Travel} place
          * @param {Period} period
          * @param {EventStyle} style
+         * @param {Task[]} tasks
          */
-        constructor(icon, title, description, place, period, style) {
+        constructor(icon, title, description, place, period, style, tasks) {
             this.icon = icon;
             this.title = title;
             this.description = description;
             this.place = place;
             this.period = period;
             this.style = style;
+            this.tasks = tasks || [];
             this.timelineEventEl = null; // Will be set later when creating the timeline event element
         }
     }
@@ -171,6 +173,29 @@ const TimelineOfDayModels = (() => {
         }
     }
 
+    class User {
+        /**
+         * @param {string} name
+         * @param {string} imageFilename
+         */
+        constructor(name, imageFilename) {
+            this.name = name;
+            this.imageFilename = imageFilename;
+        }
+    }
+
+    class Task {
+        /**
+         * @param {string} name
+         * @param {User[]} users
+         */
+        constructor(name, users) {
+            this.name = name;
+            this.users = users;
+            this.done = false;
+        }
+    }
+
     return {
         Icon,
         Place,
@@ -181,5 +206,7 @@ const TimelineOfDayModels = (() => {
         EventStyle,
         Event,
         EventLine,
+        User,
+        Task,
     }
 })();

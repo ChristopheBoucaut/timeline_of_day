@@ -87,6 +87,15 @@ main > #card-section {
     top: 0;
 }
 
+.card__tasks ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 /* Line 0 is to show hours */
 .timeline__line-0 {
     align-items: center;
@@ -148,6 +157,79 @@ main > #card-section {
 .card .event__icon {
     height: 74px;
     width: 74px;
+}
+
+/* USER */
+.user {
+    border-radius: 50%;
+    box-shadow: 0px 0px 5px 0px #9f7676;
+    width: 50px;
+}
+
+/* TASK */
+.task {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.task input {
+    display: none;
+}
+
+.task > div {
+    background-color: #ffffff;
+    border: 2px solid red;
+    border-radius: 10px;
+    margin-left: 14px;
+    margin-top: 14px;
+    padding: 18px;
+    padding-bottom: 26px;
+    position: relative;
+    transition: all ease 200ms;
+}
+
+.task input + div::before {
+    background: white;
+    border-radius: 50%;
+    border: 2px solid red;
+    border-bottom: none;
+    border-right: none;
+    color: red;
+    content: "✗";
+    font-size: 20px;
+    font-weight: bold;
+    height: 35px;
+    position: absolute;
+    right: -14px;
+    text-align: center;
+    text-shadow: 1px 1px 2px #1e1e1e;
+    transition: all ease 200ms;
+    top: -14px;
+    width: 35px;
+}
+
+.task input:checked + div {
+    border-color: green;
+}
+
+.task input:checked + div::before {
+    border-color: green;
+    color: green;
+    content: "✓";
+}
+
+.task__users {
+    bottom: -17px;
+    display: flex;
+    gap: 7px;
+    line-height: 0;
+    position: absolute;
+    right: 4px;
+}
+
+.task__users .user {
+    height: 35px;
+    width: 35px;
 }
 
 /* Medium and large screens */

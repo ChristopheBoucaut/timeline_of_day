@@ -8,6 +8,17 @@ const TimelineOfDayData = (() => {
     const danceIcon = new TimelineOfDayModels.Icon('dance.png');
     const travelIcon = new TimelineOfDayModels.Icon('travel.png');
 
+    // Define users
+    const brideUser = new TimelineOfDayModels.User('Mariée', 'user2.png');
+    const groomUser = new TimelineOfDayModels.User('Marié', 'user1.png');
+    const user3User = new TimelineOfDayModels.User('User 3', 'user3.png');
+    const user4User = new TimelineOfDayModels.User('User 4', 'user4.png');
+    const user5User = new TimelineOfDayModels.User('User 5', 'user5.png');
+    const user6User = new TimelineOfDayModels.User('User 6', 'user6.png');
+    const user7User = new TimelineOfDayModels.User('User 7', 'user7.png');
+    const user8User = new TimelineOfDayModels.User('User 8', 'user8.png');
+    const user9User = new TimelineOfDayModels.User('User 9', 'user9.png');
+
     // Define places
     const preparationsPlace = new TimelineOfDayModels.Place("Montrouge");
     const photosPlace = new TimelineOfDayModels.Place("Parc de Sceaux");
@@ -35,7 +46,13 @@ const TimelineOfDayData = (() => {
             new TimelineOfDayModels.Moment(8, 0),
             new TimelineOfDayModels.Moment(10, 30)
         ),
-        brideEventStyle
+        brideEventStyle,
+        [
+            new TimelineOfDayModels.Task("Coiffure", [brideUser, user3User]),
+            new TimelineOfDayModels.Task("Maquillage", [brideUser, user4User]),
+            new TimelineOfDayModels.Task("Habillage", [brideUser, user5User]),
+            new TimelineOfDayModels.Task("Préparation de la robe", [brideUser, user6User])
+        ]
     );
     const preparationsGroomEvent = new TimelineOfDayModels.Event(
         preparationsIcon,
@@ -46,7 +63,10 @@ const TimelineOfDayData = (() => {
             new TimelineOfDayModels.Moment(9, 30),
             new TimelineOfDayModels.Moment(10, 30)
         ),
-        groomEventStyle
+        groomEventStyle,
+        [
+            new TimelineOfDayModels.Task("Habillage avec le costume", [groomUser, user7User]),
+        ]
     );
     const travelToPhotoEvent = new TimelineOfDayModels.Event(
         travelIcon,
@@ -57,7 +77,10 @@ const TimelineOfDayData = (() => {
             new TimelineOfDayModels.Moment(10, 30),
             new TimelineOfDayModels.Moment(11, 0)
         ),
-        privateEventStyle
+        privateEventStyle,
+        [
+            new TimelineOfDayModels.Task("Conducteur", [user8User]),
+        ]
     );
 
     const photosEvent = new TimelineOfDayModels.Event(
@@ -102,7 +125,10 @@ const TimelineOfDayData = (() => {
             new TimelineOfDayModels.Moment(13, 0),
             new TimelineOfDayModels.Moment(14, 0)
         ),
-        privateEventStyle
+        privateEventStyle,
+        [
+            new TimelineOfDayModels.Task("Conducteur", [user8User]),
+        ]
     );
 
     const cityHallEvent = new TimelineOfDayModels.Event(
@@ -133,7 +159,10 @@ const TimelineOfDayData = (() => {
             new TimelineOfDayModels.Moment(15, 0),
             new TimelineOfDayModels.Moment(16, 0)
         ),
-        allEventStyle
+        allEventStyle,
+        [
+            new TimelineOfDayModels.Task("Conducteur", [user8User]),
+        ]
     );
 
     const churchEvent = new TimelineOfDayModels.Event(
@@ -145,7 +174,11 @@ const TimelineOfDayData = (() => {
             new TimelineOfDayModels.Moment(16, 0),
             new TimelineOfDayModels.Moment(17, 0)
         ),
-        allEventStyle
+        allEventStyle,
+        [
+            new TimelineOfDayModels.Task("L'enfant apporte les bagues", [user9User]),
+            new TimelineOfDayModels.Task("Echanges des voeux", [brideUser, groomUser]),
+        ]
     );
 
     const travelToDinerEvent = new TimelineOfDayModels.Event(
@@ -158,7 +191,10 @@ const TimelineOfDayData = (() => {
             new TimelineOfDayModels.Moment(17, 5),
             new TimelineOfDayModels.Moment(17, 35)
         ),
-        allEventStyle
+        allEventStyle,
+        [
+            new TimelineOfDayModels.Task("Conducteur", [user8User]),
+        ]
     );
 
     const dinerEvent = new TimelineOfDayModels.Event(

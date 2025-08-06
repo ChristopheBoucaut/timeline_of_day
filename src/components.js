@@ -3,6 +3,8 @@ const TimelineOfDayComponents = (() => {
     let timelineEventTemplate = null;
     /** @type {HTMLElement|null} */
     let cardContentTemplate = null;
+    /** @type {HTMLElement|null} */
+    let taskTemplate = null;
 
     /**
      * @param {number} hour
@@ -101,7 +103,55 @@ const TimelineOfDayComponents = (() => {
             el.innerHTML = event.description;
         });
 
+        const cardTasksUlEl = cardContentEl.querySelector('.card__tasks ul')
+        if (event.tasks.length === 0) {
+            cardTasksUlEl.remove();
+        } else {
+            event.tasks.forEach((task) => {
+                const liEl = document.createElement('li');
+                liEl.append(createTaskEl(task));
+                cardTasksUlEl.append(liEl);
+            });
+        }
+
         return cardContentEl;
+    }
+
+    /**
+     * @param {TimelineOfDayModels.Task} task
+     * @returns {HTMLElement}
+     */
+    function createTaskEl(task) {
+        taskTemplate = taskTemplate || document.querySelector('#card-task-template');
+
+
+        const taskEl = document.importNode(taskTemplate.content, true);
+        taskEl.querySelector('span').textContent = task.name;
+
+        const taskInputEl = taskEl.querySelector('input');
+        taskInputEl.checked = task.done;
+
+        const taskUsersEl = taskEl.querySelector('.task__users');
+        task.users.forEach((user) => {
+            taskUsersEl.append(createUserEl(user));
+        });
+        taskInputEl.onchange = () => task.done = taskInputEl.checked;
+
+        return taskEl;
+    }
+
+    /**
+     * @param {TimelineOfDayModels.User} user
+     * @returns {HTMLElement}
+     */
+    function createUserEl(user) {
+        const imgEl = document.createElement('img');
+        imgEl.src = getUserPath(user);
+        imgEl.alt = user.name;
+        imgEl.title = user.name;
+        imgEl.classList.add('user');
+
+        return imgEl;
     }
 
     /**
@@ -112,11 +162,20 @@ const TimelineOfDayComponents = (() => {
         return `images/icons/${icon.imageFilename}`;
     }
 
+    /**
+     * @param {TimelineOfDayModels.User} user
+     * @returns {string}
+     */
+    function getUserPath(user) {
+        return `images/users/${user.imageFilename}`;
+    }
+
     return {
         createHourContainerEl,
         createHourSeparatorEl,
         createCurrentTimeBar,
         createTimelineEventEl,
         createCardContentEl,
+        createTaskEl,
     };
 })();
