@@ -126,7 +126,7 @@
         // Scroll to current time or first timeline card if current time is earlier
         const now = TimelineOfDayModels.Moment.createForNow();
         if (firstEvent !== null && now.isBefore(firstEvent.period.start)) {
-            scrollToMoment(firstEvent.from);
+            scrollToMoment(firstEvent.period.start);
         } else {
             scrollToMoment(now);
         }
