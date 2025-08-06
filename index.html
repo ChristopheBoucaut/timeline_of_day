@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline of a day</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./src/style.css">
+    <script src="./src/config.js"></script>
+    <script src="./src/model.js"></script>
+    <script src="./data/events.js"></script>
+    <script src="./src/components.js"></script>
+    <script src="./src/script.js" defer></script>
+</head>
+<body>
+    <main>
+        <section id="timeline-section">
+            <div class="timeline-wrapper">
+                <div class="timeline"></div>
+            </div>
+        </section>
+        <section id="card-section">
+            <div class="card"></div>
+        </section>
+    </main>
+
+    <template id="timeline-event-template">
+        <div class="timeline__event">
+            <img class="event__icon" />
+            <div class="timeline__event__title"></div>
+        </div>
+    </template>
+
+    <template id="card-content-template">
+        <header>
+            <img class="event__icon" />
+            <h2 class="card__title"></h2>
+            <div class="card__metadata">
+                <div class="card__time"></div>
+                <div class="card__place"></div>
+            </div>
+        </header>
+        <h2>Note(s)</h2>
+        <div class="card__description"></div>
+    </template>
+</body>
+</html>
