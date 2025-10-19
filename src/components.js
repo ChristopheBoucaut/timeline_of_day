@@ -5,6 +5,8 @@ const TimelineOfDayComponents = (() => {
     let cardContentTemplate = null;
     /** @type {HTMLElement|null} */
     let taskTemplate = null;
+    /** @type {HTMLElement|null} */
+    let modalTemplate = null;
 
     /**
      * @param {number} hour
@@ -124,7 +126,6 @@ const TimelineOfDayComponents = (() => {
     function createTaskEl(task) {
         taskTemplate = taskTemplate || document.querySelector('#card-task-template');
 
-
         const taskEl = document.importNode(taskTemplate.content, true);
         taskEl.querySelector('span').textContent = task.name;
 
@@ -138,6 +139,95 @@ const TimelineOfDayComponents = (() => {
         taskInputEl.onchange = () => task.done = taskInputEl.checked;
 
         return taskEl;
+    }
+
+    /**
+     * @param {HTMLElement} taskModalEl
+     * @param {Map<TimelineOfDayModels.User, Map<TimelineOfDayModels.Event, TimelineOfDayModels.Task[]>>} tasksByUser
+     */
+    function setupTasksModal(tasksModalEl, tasksByUser) {
+        setupModal(
+            tasksModalEl,
+            "Actions par intervenants",
+            (contentEl) => {
+                // Create description texte.
+                const descriptionEl = document.createElement('p');
+                descriptionEl.textContent = "Cliquez sur une des personnes ci-dessous pour voir ses tâches."
+
+                // Create tasks list
+                const tasksByEventListEl = document.createElement('ul');
+                tasksByEventListEl.classList.add('tasks-by-event-list');
+
+                // Create users list
+                const usersListEl = createUsersListEl(
+                    tasksByUser.keys(),
+                    (user) => {
+                        tasksByEventListEl.innerHTML = '';
+                        tasksByUser.get(user).forEach((tasks, event) => {
+                            const tasksListEl = document.createElement('ul');
+                            tasksListEl.classList.add('tasks-list');
+
+                            tasks.forEach(task => {
+                                const liEl = document.createElement('li');
+                                liEl.append(createTaskEl(task));
+                                tasksListEl.append(liEl);
+                            });
+
+                            const tasksByEventEl = document.createElement('li');
+                            tasksByEventEl.textContent = event.title;
+                            tasksByEventEl.append(tasksListEl);
+                            tasksByEventListEl.append(tasksByEventEl);
+                        });
+                    }
+                );
+
+                contentEl.append(descriptionEl);
+                contentEl.append(usersListEl);
+                contentEl.append(tasksByEventListEl);
+            }
+        );
+    }
+
+    function setupModal(modalEl, title, callbackForModalContent) {
+        // Reset
+        modalEl.innerHTML = '';
+
+        modalTemplate = modalTemplate || document.querySelector('#modal-template');
+        const modalContentEl = document.importNode(modalTemplate.content, true);
+
+        // Setup static elements
+        // -- Title
+        modalContentEl.querySelector('.modal__title').textContent = title;
+        // -- Close action
+        modalContentEl.querySelector('.modal__action-close').addEventListener('click', () => modalEl.close());
+        // -- Content
+        callbackForModalContent(modalContentEl.querySelector('.modal__content'));
+
+        modalEl.append(modalContentEl);
+    }
+
+    /**
+     * @param {TimelineOfDayModels.User[]} users
+     * @param {Function} actionOnClick
+     * @returns {HTMLElement}
+     */
+    function createUsersListEl(users, actionOnClick = null) {
+        const listContainerEl = document.createElement('ul');
+        listContainerEl.classList.add('users-list');
+        users.forEach(user => {
+            const userEl = createUserEl(user);
+            if (actionOnClick) {
+                userEl.addEventListener('click', ({target}) => {
+                    listContainerEl.querySelector('.user_selected')?.classList.remove('user_selected');
+                    target.classList.add('user_selected');
+
+                    actionOnClick(user);
+                });
+            }
+            listContainerEl.append(userEl);
+        });
+
+        return listContainerEl;
     }
 
     /**
@@ -177,5 +267,6 @@ const TimelineOfDayComponents = (() => {
         createTimelineEventEl,
         createCardContentEl,
         createTaskEl,
+        setupTasksModal,
     };
 })();

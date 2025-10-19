@@ -25,6 +25,11 @@
         <section id="card-section">
             <div class="card"></div>
         </section>
+        <section id="actions-section">
+            <button class="action-open-tasks-modal">Voir l'ensemble des tâches</button>
+
+            <dialog id="tasks-modal" class="modal"></dialog>
+        </section>
     </main>
 
     <template id="timeline-event-template">
@@ -47,7 +52,7 @@
         <div class="card__description"></div>
         <div class="card__tasks">
             <h2>Tâches</h2>
-            <ul></ul>
+            <ul class="tasks-list"></ul>
         </div>
     </template>
 
@@ -59,6 +64,12 @@
                 <div class="task__users"></div>
             </div>
         </label>
+    </template>
+
+    <template id="modal-template">
+        <h2 class="modal__title"></h2>
+        <button class="modal__action-close">Fermer</button>
+        <div class="modal__content"></div>
     </template>
 </body>
 </html>

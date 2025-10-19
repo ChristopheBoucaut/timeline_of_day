@@ -22,7 +22,7 @@ h2 {
 main {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 7px;
 }
 
 main > #timeline-section {
@@ -37,6 +37,19 @@ main > #card-section {
     display: flex;
     height: 50vh;
     height: 50dvh;
+}
+
+main > #actions-section {
+    box-sizing: border-box;
+    display: flex;
+    height: calc(10dvh - 2 * 7px); /* Take the rest - gap * 2 */
+    margin: 0 14px;
+    padding-bottom: 7px;
+}
+
+main > #actions-section > * {
+    cursor: pointer;
+    flex: 1;
 }
 
 /* EVENT */
@@ -85,15 +98,6 @@ main > #card-section {
     margin-left: 4px;
     position: absolute;
     top: 0;
-}
-
-.card__tasks ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 7px;
-    list-style: none;
-    margin: 0;
-    padding: 0;
 }
 
 /* Line 0 is to show hours */
@@ -159,6 +163,34 @@ main > #card-section {
     width: 74px;
 }
 
+/* Modal */
+.modal {
+    max-height: 80dvh;
+    position: relative;
+    overflow: auto;
+    width: 80%;
+}
+
+.modal__title {
+    float: left;
+}
+
+.modal__action-close {
+    float: right;
+}
+
+.modal__content {
+    clear: both;
+}
+
+.tasks-by-event-list {
+    list-style: none;
+    margin: 14px 0 0;
+    padding: 0;
+}
+
+/* -- tasks modal */
+
 /* USER */
 .user {
     border-radius: 50%;
@@ -166,7 +198,31 @@ main > #card-section {
     width: 50px;
 }
 
+.users-list {
+    display: flex;
+    gap: 14px;
+    margin: 0;
+    padding: 14px 0;
+}
+
+.users-list .user {
+    cursor: pointer;
+}
+
+.users-list .user.user_selected {
+    box-shadow: 0px 0px 5px 2px #a5b2ff;
+}
+
 /* TASK */
+ul.tasks-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
 .task {
     cursor: pointer;
     display: inline-block;
@@ -180,8 +236,10 @@ main > #card-section {
     background-color: #ffffff;
     border: 2px solid red;
     border-radius: 10px;
+    margin-bottom: 17px; /* for user icons space */
     margin-left: 14px;
     margin-top: 14px;
+    margin-right: 14px; /* for state icon space */
     padding: 18px;
     padding-bottom: 26px;
     position: relative;

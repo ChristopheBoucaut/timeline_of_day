@@ -1,5 +1,8 @@
 (() => {
     const timelineWrapperEl = document.querySelector('#timeline-section');
+    const tasksModalEl = document.querySelector('#tasks-modal');
+    /** @type {Map<TimelineOfDayModels.User, Map<TimelineOfDayModels.Event, TimelineOfDayModels.Task[]>> | null} */
+    let tasksByUser = null; // Used to be a cache for modal.
 
     /** Setup all components */
     setupDynamicStyles(
@@ -10,6 +13,7 @@
     setupHours();
     setupCurrentTimeBar();
     setupTimelineEvents(TimelineOfDayData.lines);
+    setupActions();
 
     /** Setup hours for the timeline */
     function setupHours() {
@@ -154,5 +158,46 @@
             cardEl.append(TimelineOfDayComponents.createCardContentEl(event));
             cardEl.style.backgroundColor = event.style.backgroundColor.value;
         });
+    }
+
+    function setupActions() {
+        document.querySelectorAll('.action-open-tasks-modal').forEach((el) => {
+            el.addEventListener('click', openTasksModal);
+        });
+    }
+
+    function openTasksModal() {
+        const tasksByUser = getTasksByUser(TimelineOfDayData.lines)
+
+        TimelineOfDayComponents.setupTasksModal(tasksModalEl, tasksByUser);
+        tasksModalEl.showModal();
+    }
+
+    /**
+     * @param {TimelineOfDayModels.EventLine[]} lines
+     * @return {Map<TimelineOfDayModels.User, Map<TimelineOfDayModels.Event, TimelineOfDayModels.Task[]>>}
+     */
+    function getTasksByUser(lines) {
+        if (tasksByUser === null) {
+            tasksByUser = new Map();
+            lines.forEach(line => {
+                line.events.forEach(event => {
+                    event.tasks.forEach(task => {
+                        task.users.forEach(user => {
+                            if (!tasksByUser.has(user)) {
+                                tasksByUser.set(user, new Map());
+                            }
+                            if (!tasksByUser.get(user).has(event)) {
+                                tasksByUser.get(user).set(event, []);
+                            }
+                            tasksByUser.get(user).get(event).push(task);
+                        });
+                    });
+                });
+            });
+        }
+        console.log(tasksByUser);
+
+        return tasksByUser;
     }
 })();
