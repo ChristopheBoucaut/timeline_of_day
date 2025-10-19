@@ -42,14 +42,10 @@ main > #card-section {
 main > #actions-section {
     box-sizing: border-box;
     display: flex;
+    gap: 7px;
     height: calc(10dvh - 2 * 7px); /* Take the rest - gap * 2 */
     margin: 0 14px;
     padding-bottom: 7px;
-}
-
-main > #actions-section > * {
-    cursor: pointer;
-    flex: 1;
 }
 
 /* EVENT */
@@ -119,7 +115,7 @@ main > #actions-section > * {
 }
 
 .timeline__event.timeline__event--selected {
-    box-shadow: 0px 0px 5px 2px #a5d8ff;
+    box-shadow: 0px 0px 5px 2px #a5b2ff;
 }
 
 .timeline__event .event__icon {
@@ -136,8 +132,7 @@ main > #actions-section > * {
 
 /* CARD */
 .card {
-    border: 1px solid #1e1e1e;
-    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px #9b9b9b;
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -163,6 +158,25 @@ main > #actions-section > * {
     width: 74px;
 }
 
+/* Footer / Action */
+#actions-section .action {
+    align-items: center;
+    background-color: #a5d8ff;
+    border: 0;
+    box-shadow: 0px 0px 5px 0px #9b9b9b;
+    color: black;
+    cursor: pointer;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    line-height: 20px;
+    text-decoration: none;
+}
+
+#actions-section .action__text {
+    display: none;
+}
+
 /* Modal */
 .modal {
     max-height: 80dvh;
@@ -183,13 +197,12 @@ main > #actions-section > * {
     clear: both;
 }
 
+/* -- tasks modal */
 .tasks-by-event-list {
     list-style: none;
     margin: 14px 0 0;
     padding: 0;
 }
-
-/* -- tasks modal */
 
 /* USER */
 .user {
@@ -301,5 +314,14 @@ ul.tasks-list {
     .card header .card__metadata {
         flex: 1;
         text-align: right;
+    }
+
+    /* Footer / Action */
+    #actions-section .action__icon {
+        margin-right: 7px;
+    }
+
+    #actions-section .action__text {
+        display: inline;
     }
 }

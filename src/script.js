@@ -1,6 +1,6 @@
 (() => {
     const timelineWrapperEl = document.querySelector('#timeline-section');
-    const tasksModalEl = document.querySelector('#tasks-modal');
+    const modalEl = document.querySelector('#modal');
     /** @type {Map<TimelineOfDayModels.User, Map<TimelineOfDayModels.Event, TimelineOfDayModels.Task[]>> | null} */
     let tasksByUser = null; // Used to be a cache for modal.
 
@@ -162,15 +162,27 @@
 
     function setupActions() {
         document.querySelectorAll('.action-open-tasks-modal').forEach((el) => {
-            el.addEventListener('click', openTasksModal);
+            el.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                TimelineOfDayComponents.openTasksModal(
+                    modalEl,
+                    getTasksByUser(TimelineOfDayData.lines)
+                );
+            });
         });
-    }
 
-    function openTasksModal() {
-        const tasksByUser = getTasksByUser(TimelineOfDayData.lines)
+        document.querySelectorAll('.action-open-help-modal').forEach((el) => {
+            el.addEventListener('click', (ev) => {
+                ev.preventDefault();
+                TimelineOfDayComponents.openHelpModal(modalEl);
+            });
+        });
 
-        TimelineOfDayComponents.setupTasksModal(tasksModalEl, tasksByUser);
-        tasksModalEl.showModal();
+        // Open help modal for first visit.
+        if (localStorage.getItem('helpShown') !== '1') {
+            localStorage.setItem('helpShown', '1');
+            TimelineOfDayComponents.openHelpModal(modalEl);
+        }
     }
 
     /**
@@ -196,7 +208,6 @@
                 });
             });
         }
-        console.log(tasksByUser);
 
         return tasksByUser;
     }

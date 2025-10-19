@@ -145,8 +145,8 @@ const TimelineOfDayComponents = (() => {
      * @param {HTMLElement} taskModalEl
      * @param {Map<TimelineOfDayModels.User, Map<TimelineOfDayModels.Event, TimelineOfDayModels.Task[]>>} tasksByUser
      */
-    function setupTasksModal(tasksModalEl, tasksByUser) {
-        setupModal(
+    function openTasksModal(tasksModalEl, tasksByUser) {
+        openModal(
             tasksModalEl,
             "Actions par intervenants",
             (contentEl) => {
@@ -188,7 +188,25 @@ const TimelineOfDayComponents = (() => {
         );
     }
 
-    function setupModal(modalEl, title, callbackForModalContent) {
+    /**
+     * @param {HTMLElement} taskModalEl
+     */
+    function openHelpModal(helpModalEl) {
+        openModal(
+            helpModalEl,
+            "Comment ça marche ?",
+            (contentEl) => {
+                contentEl.textContent = "Cliquez sur un élément du haut pour voir le détail dans la partie du centre. Il est possible de glisser vers la droite, la gauche, le haut et le bas dans la frise pour voir les différents événements.";
+            }
+        );
+    }
+
+    /**
+     * @param {HTMLElement} taskModalEl
+     * @param {string} title
+     * @param {Function} callbackForModalContent
+     */
+    function openModal(modalEl, title, callbackForModalContent) {
         // Reset
         modalEl.innerHTML = '';
 
@@ -204,6 +222,7 @@ const TimelineOfDayComponents = (() => {
         callbackForModalContent(modalContentEl.querySelector('.modal__content'));
 
         modalEl.append(modalContentEl);
+        modalEl.showModal();
     }
 
     /**
@@ -267,6 +286,7 @@ const TimelineOfDayComponents = (() => {
         createTimelineEventEl,
         createCardContentEl,
         createTaskEl,
-        setupTasksModal,
+        openTasksModal,
+        openHelpModal,
     };
 })();
